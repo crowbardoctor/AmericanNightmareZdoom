@@ -1,0 +1,1 @@
+i can't seem to extract AW AM's sound files correctly since i don't get any sound when playing them
