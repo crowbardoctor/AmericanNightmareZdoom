@@ -1,0 +1,1 @@
+ACTOR CTakenDice : SmoothDoom_VariantsSpawner replaces ZombieScientist
