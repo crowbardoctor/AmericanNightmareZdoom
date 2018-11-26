@@ -1,3 +1,6 @@
 AMBUSH
 Monster is set to ambush players: The monster will not start chasing the player after hearing player weapons until it has a direct line of sight to him (after being woken up, however, it does not need to be facing him). Normally this is set in an editor on a per-object basis. Note that some editors call this flag "Deaf," but this is a misnomer.
 The monster can still hear the player with this flag set!
+
+DONTCORPSE
+Monsters with this flag will not automatically get the CORPSE flag when killed. It is the modder's duty to explicitly set the flag in the monster's death sequence. This has two main effects: first, the actor cannot be immediately passed through, and secondly it will not immediately enter a Crash state if it is on the floor or another actor. The purpose is to allow modders greater control on death animations and special effects with flying monsters.
