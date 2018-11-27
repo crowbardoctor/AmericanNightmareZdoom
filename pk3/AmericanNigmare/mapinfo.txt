@@ -19,6 +19,6 @@ map YOURMAP1 "Mission : X"
 //map MAP01 "Mission : X"
 {next = YOURMAP2
 //next MAP01
-sky1 = MILKYWAY 0.02 // just an example :)
+sky1 = MILKYWAY //0.02 // just an example :)
 //music xxxxxxxx
 }
