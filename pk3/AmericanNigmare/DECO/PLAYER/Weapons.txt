@@ -1,0 +1,44 @@
+Actor PistolHeldAmmo : Inventory
+{	Inventory.MaxAmount 17	}
+
+Actor ReloadCheck : Inventory
+{	Inventory.MaxAmount 1	}
+
+ACTOR Pistol2 : DoomWeapon replaces Pistol
+{
+  Weapon.SelectionOrder 1900
+  Weapon.AmmoUse 1
+  Weapon.AmmoGive 11
+  Weapon.AmmoType "Clip"
+  Obituary "$OB_MPPISTOL"
+  //+WEAPON.WIMPY_WEAPON
+  Inventory.Pickupmessage "$PICKUP_PISTOL_DROPPED"
+  Tag "9mmPISTOL"
+  States
+  {
+  Ready:
+    PISG A 1 A_WeaponReady
+    Loop
+  Deselect:
+    PISG A 1 A_Lower
+    Loop
+  Select:
+    PISG A 1 A_Raise
+    Loop
+  Fire:
+    PISG A 4
+    PISG B 6 A_FirePistol
+    PISG C 2
+	PISG R 2
+    PISG B 5 A_ReFire
+    Goto Ready
+  Flash:
+    PISF A 7 Bright A_Light1
+    Goto LightDone
+    PISF A 7 Bright A_Light1
+    Goto LightDone
+  Spawn:
+    PIST A -1
+    Stop
+  }
+}
