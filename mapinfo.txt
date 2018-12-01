@@ -1,0 +1,24 @@
+GameInfo
+{
+	AddEventHandlers = "SpriteShadowHandler"
+
+}
+
+clearepisodes
+
+episode YOURMAP1
+//episode MAP01
+{name = "Your Invasion"
+}
+
+episode MAP01
+{name = "Doom 2 : Arcade"
+}
+
+map YOURMAP1 "Mission : X"
+//map MAP01 "Mission : X"
+{next = YOURMAP2
+//next MAP01
+sky1 = MILKYWAY //0.02 // just an example :)
+//music xxxxxxxx
+}
