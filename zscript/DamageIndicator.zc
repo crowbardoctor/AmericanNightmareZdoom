@@ -1,0 +1,102 @@
+class DamageIndicatorStatusBar : BaseStatusBar
+{
+	HUDFont mHUDFont;
+
+	const HUD_WIDTH = 320;
+	const HUD_HEIGHT = 200;
+
+	const barHeight = 0;
+
+	override void Init()
+	{
+		Super.Init();
+		SetSize(barHeight, HUD_WIDTH, HUD_HEIGHT);
+		Font fnt = "SmallFont";
+		mHUDFont = HUDFont.Create(fnt, fnt.GetCharWidth("0"), true, 1, 1);
+	}
+
+	override void NewGame()
+	{
+		if (CPlayer)
+		{
+			AttachToPlayer(CPlayer);
+		}
+	}
+
+	override void Draw(int state, double TicFrac)
+	{
+		Super.Draw(state, TicFrac);
+
+		if (CPlayer && (state == HUD_StatusBar || state == HUD_Fullscreen))
+		{
+			BeginHUD();
+
+			// damage indicator
+			DrawDamageIndicator();
+		}
+	}
+}
+
+extend class DamageIndicatorStatusBar
+{
+	double dmgAlphaFwd, dmgAlphaBack, dmgAlphaLeft, dmgAlphaRight;
+	const DAMAGE_FADE_SPEED = 0.94;
+	const DAMAGE_INDICATOR_OFFSET = 50;
+
+	void DrawDamageIndicator(void)
+	{
+		dmgAlphaFwd *= DAMAGE_FADE_SPEED;
+		dmgAlphaBack *= DAMAGE_FADE_SPEED;
+		dmgAlphaLeft *= DAMAGE_FADE_SPEED;
+		dmgAlphaRight *= DAMAGE_FADE_SPEED;
+
+		TextureID dmgTexFwd, dmgTexBack, dmgTexLeft, dmgTexRight;
+
+		// listen for player damage
+		let p = MyPlayerPawn(CPlayer.mo);
+		if (p && p.wasDamaged)
+		{
+			double ang = (p.Angle - p.lastDamageAngle) % 360;
+
+			if ((ang > 315 && ang < 360) || (ang > 0 && ang < 45))	dmgAlphaFwd = 1.0;
+			if ((ang > 135 && ang < 225))							dmgAlphaBack = 1.0;
+			if ((ang > 225 && ang < 315))							dmgAlphaLeft = 1.0;
+			if ((ang > 45 && ang < 135))							dmgAlphaRight = 1.0;
+		}
+
+		dmgTexFwd = TexMan.CheckForTexture("graphics/hud/dmg fwd.png", TexMan.Type_MiscPatch);
+		dmgTexBack = TexMan.CheckForTexture("graphics/hud/dmg back.png", TexMan.Type_MiscPatch);
+		dmgTexLeft = TexMan.CheckForTexture("graphics/hud/dmg left.png", TexMan.Type_MiscPatch);
+		dmgTexRight = TexMan.CheckForTexture("graphics/hud/dmg right.png", TexMan.Type_MiscPatch);
+
+		// abort if one of the textures can't be loaded
+		if (!dmgTexFwd.IsValid() || !dmgTexBack.IsValid() || !dmgTexLeft.IsValid() || !dmgTexRight.IsValid())
+		{
+			return;
+		}
+
+		Screen.DrawTexture(dmgTexFwd, false,
+			HUD_WIDTH / 2,
+			HUD_HEIGHT / 2 - DAMAGE_INDICATOR_OFFSET,
+			DTA_Clean, true,
+			DTA_Alpha, dmgAlphaFwd);
+
+		Screen.DrawTexture(dmgTexBack, false,
+			HUD_WIDTH / 2,
+			HUD_HEIGHT / 2 + DAMAGE_INDICATOR_OFFSET,
+			DTA_Clean, true,
+			DTA_Alpha, dmgAlphaBack);
+
+		Screen.DrawTexture(dmgTexLeft, false,
+			HUD_WIDTH / 2 - DAMAGE_INDICATOR_OFFSET,
+			HUD_HEIGHT / 2,
+			DTA_Clean, true,
+			DTA_Alpha, dmgAlphaLeft);
+
+		Screen.DrawTexture(dmgTexRight, false,
+			HUD_WIDTH / 2 + DAMAGE_INDICATOR_OFFSET,
+			HUD_HEIGHT / 2,
+			DTA_Clean, true,
+			DTA_Alpha, dmgAlphaRight);
+	}
+}

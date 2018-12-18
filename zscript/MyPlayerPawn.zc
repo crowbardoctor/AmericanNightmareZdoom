@@ -1,0 +1,27 @@
+class MyPlayerPawn : DoomPlayer
+{
+	// damage indicator stuff
+	bool wasDamaged;
+	double lastDamageAngle;
+
+
+	override void Tick(void)
+	{
+		Super.Tick();
+
+		// reset damage indicator
+		wasDamaged = false;
+	}
+
+	override int DamageMobj(Actor inflictor, Actor source, int damage, Name mod, int flags, double angle)
+	{
+		if (inflictor)
+		{
+			// update the HUD's damage indicator
+			lastDamageAngle = DeltaAngle(Angle, AngleTo(inflictor));
+			wasDamaged = true;
+		}
+
+		return Super.DamageMobj(inflictor, source, damage, mod, flags, angle);
+	}
+}

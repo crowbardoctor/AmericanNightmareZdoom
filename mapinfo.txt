@@ -1,5 +1,9 @@
 GameInfo
 {
+	PlayerClasses = "MyPlayerPawn"
+	StatusBarClass = "DamageIndicatorStatusBar"
+}
+
 	AddEventHandlers = "SpriteShadowHandler"
 
 }
