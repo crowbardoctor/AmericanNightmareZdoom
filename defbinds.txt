@@ -24,6 +24,7 @@ shift +speed
 space +use
 rightarrow +right
 leftarrow +left
+w +forward
 uparrow +forward
 downarrow +back
 , +moveleft
