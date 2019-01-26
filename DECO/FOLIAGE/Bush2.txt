@@ -1,0 +1,14 @@
+Actor BUSAB 326
+{
+	scale 0.15
+	+FloorClip
+	Height 30
+	Radius 5
+	  Tag "Bush 2"
+	States
+  {
+  Spawn:
+    DRYB A -1
+    Stop
+  }
+}

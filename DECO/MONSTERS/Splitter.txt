@@ -1,0 +1,126 @@
+ACTOR Splitter 7414
+{
+  //Game Doom
+  obituary "%o was axe-murdered by a Splitter."
+  health 30
+  mass 90
+  speed 8
+  Radius 20
+  Height 52
+  painchance 200
+  seesound "grunt/sight"
+  painsound "grunt/pain"
+  deathsound "grunt/death"
+  activesound "grunt/active"
+  Dropitem Minisplitter
+  MONSTER
+  +FLOORCLIP
+  +EXTREMEDEATH
+  States
+  {
+   Spawn:
+    SPLA AB 10 A_Look
+    loop
+  See:
+    SPLA AABBCCDD 4 A_Chase
+    loop
+  Melee:
+    SPLA E 8 A_FaceTarget
+    SPLA F 16 A_CustomMeleeAttack (random (2, 6) *5, "KnifeHit", "skeleton/swing")
+    SPLA E 4
+    goto See
+  Pain:
+    SPLA G 3
+    SPLA G 3 A_Pain
+    goto See
+  Death:
+    SPLA H 5
+    SPLA I 5 A_Scream
+    SPLA J 5 A_NoBlocking
+    SPLA K 5
+    SPLA L 5
+    SPLA M 5
+    SPLA N -1
+    stop
+  XDeath:
+    SPLA O 5
+    SPLA P 5 A_XScream
+    SPLA Q 5 A_NoBlocking
+    SPLA RSTUV 5
+    SPLA W -1
+    stop
+  Raise:
+    SPLA MLKJIH 5
+    goto See
+  }
+}
+
+ACTOR MiniSplitter 30002
+{
+  //Game Doom
+  obituary "%o was axe-murdered by a Splitter."
+  health 30
+  mass 90
+  speed 8
+  Radius 20
+  Height 52
+  painchance 200
+  seesound "grunt/sight"
+  painsound "grunt/pain"
+  deathsound "grunt/death"
+  activesound "grunt/active"
+  scale 0.75
+  Dropitem Minisplitter
+  MONSTER
+  +FLOORCLIP
+  +NOEXTREMEDEATH
+  //$+INTERPOLATEANGLES
+  States
+  {
+   Spawn:
+    SPLA AB 10 A_Look
+    loop
+  See:
+    SPLA AABBCCDD 4 A_Chase
+    loop
+  Melee:
+    SPLA E 8 A_FaceTarget
+    SPLA F 16 A_CustomMeleeAttack (random (2, 6) *5, "KnifeHit", "skeleton/swing")
+    SPLA E 4
+    goto See
+  Pain:
+    SPLA G 3
+    SPLA G 3 A_Pain
+    goto See
+  Death:
+    SPLA H 5
+    SPLA I 5 A_Scream
+    SPLA J 5 A_NoBlocking
+    SPLA K 5
+    SPLA L 5
+    SPLA M 5
+    SPLA N -1
+    stop
+  XDeath:
+    SPLA O 5
+    SPLA P 5 A_XScream
+    SPLA Q 5 A_NoBlocking
+    SPLA RSTUV 5
+    SPLA W -1
+    stop
+  Raise:
+    SPLA MLKJIH 5
+    goto See
+  }
+}
+
+Actor Veryminisplitter : MiniSplitter 19998
+{
+Health 100
+Radius 32
+Height 24
+Scale 0.5
+Translation 2
+Meleedamage 3
+-NOTARGET
+}
